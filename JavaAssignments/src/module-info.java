@@ -1,0 +1,3 @@
+module javaAssignments {
+	requires junit;
+}
