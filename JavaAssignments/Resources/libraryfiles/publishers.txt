@@ -1,6 +1,0 @@
-1,publisher,Address
-2,penguin,mayland
-3,science books,new york
-4,primer,california
-5,fern and hall,singapore
-6,t
