@@ -23,25 +23,65 @@ Scanner in;
 	
 	public void welcomeMessage()
 	{
-		System.out.println("Welcome to the Smoothstack library!");
+		System.out.println("Welcome to the GCIT library management system. Which category of user are you?");
 	}
 	public void mainMenuOptions()
 	{
 		System.out.println("Choose an option from the below. Type the key and press 'enter'");
-		System.out.println("1) Create");
-		System.out.println("2) Read");
-		System.out.println("3) Update");
-		System.out.println("4) Delete");
+		System.out.println("1) Librarian");
+		System.out.println("2) Administrator");
+		System.out.println("3) Borrower");
 		System.out.println("q) quit");
 	}
 	
-	public void chooseDatabase()
+	public void chooseLibrarianOptions()
 	{
-		System.out.println("1) Publishers");
-		System.out.println("2) Authors");
-		System.out.println("3) Books");
+		System.out.println("Provide your library branch");
 		System.out.println("r) return");
 	}
+	
+	public void librarianOptions()
+	{
+		System.out.println("1) Update your branch details");
+		System.out.println("2) Add book copies to your branch");
+		System.out.println("r) return to main menu");
+	}
+	
+	public void chooseAdminOptions()
+	{
+		System.out.println("Provide your library branch");
+		System.out.println("r) return");
+	}
+	public void borrowerLoginPrompt()
+	{
+		System.out.println("Enter your library card number or 'r' to return");
+	}
+	
+	public void borrowerOptions()
+	{
+		System.out.println("1) Check out a book");
+		System.out.println("2) Return a book");
+		System.out.println("r) Main menu");
+	}
+	
+	
+	public void updateBranchDetails(int branchId, String branchName)
+	{
+		System.out.print("You have chosen to update the Branch with Branch Id: "+branchId+" and Branch Name: "+branchName+". Enter ‘r’ at any prompt to cancel operation.\n");
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// ------------------- OLD CODE ----------------------------//
+	
 	
 	public Publisher getPublisherInfo()
 	{

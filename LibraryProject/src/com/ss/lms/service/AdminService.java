@@ -23,7 +23,7 @@ public ConnectionUtil connUtil = new ConnectionUtil();
 			AuthorDao adao = new AuthorDao(conn);
 			if(author.getName()!=null){
 				adao.updateAuthor(author);
-			}else if(author.getAuthorId()!=0){
+			}else if(author.getAuthorId()!=null){
 				adao.deleteAuthor(author);
 			}else{
 				adao.addAuthor(author);

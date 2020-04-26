@@ -36,6 +36,11 @@ public class BorrowerDao extends BaseDao<Borrower>{
 	public List<Borrower> readAllBorrowers() throws ClassNotFoundException, SQLException{
 		return read("SELECT * FROM tbl_borrower", null);
 	}
+	
+	public List<Borrower> readSingleBorrower(int cardNo) throws ClassNotFoundException, SQLException
+	{
+		return read("SELECT * FROM tbl_borrower WHERE cardNo = ?", new Object[]{cardNo});
+	}
 
 	@Override
 	public List<Borrower> extractData(ResultSet rs) throws SQLException {

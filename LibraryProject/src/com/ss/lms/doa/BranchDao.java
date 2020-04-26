@@ -22,19 +22,19 @@ public class BranchDao extends BaseDao<Branch>{
 	}
 
 	public void addBranch(Branch branch) throws ClassNotFoundException, SQLException{
-		save("INSERT INTO tbl_branch (branchName, branchAddress) VALUES (?,?)", new Object[] {branch.getName(),branch.getAddress()});
+		save("INSERT INTO tbl_library_branch (branchName, branchAddress) VALUES (?,?)", new Object[] {branch.getName(),branch.getAddress()});
 	}
 
 	public void updateBranch(Branch branch)  throws ClassNotFoundException, SQLException{
-		save("UPDATE tbl_branch SET branchName = ?, branchAddress = ? WHERE branchId = ?", new Object[] {branch.getName(), branch.getAddress(), branch.getBranchId()});
+		save("UPDATE tbl_library_branch SET branchName = ?, branchAddress = ? WHERE branchId = ?", new Object[] {branch.getName(), branch.getAddress(), branch.getBranchId()});
 	}
 
 	public void deleteBranch(Branch branch)  throws ClassNotFoundException, SQLException{
-		save("DELETE FROM tbl_branch WHERE branchId = ?", new Object[]{branch.getBranchId()});
+		save("DELETE FROM tbl_library_branch WHERE branchId = ?", new Object[]{branch.getBranchId()});
 	}
 	
-	public List<Branch> readAllBranchs() throws ClassNotFoundException, SQLException{
-		return read("SELECT * FROM tbl_branch", null);
+	public List<Branch> readAllBranches() throws ClassNotFoundException, SQLException{
+		return read("SELECT * FROM tbl_library_branch", null);
 	}
 
 	@Override
