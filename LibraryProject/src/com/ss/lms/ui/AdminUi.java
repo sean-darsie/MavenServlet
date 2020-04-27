@@ -536,6 +536,7 @@ public class AdminUi {
 		Borrower borrower = utilService.getBorrowerById(borrowerId);
 		if (borrower != null)
 		{
+			borrower.setName(null);
 			adminService.saveBorrower(borrower);
 		}
 	}
@@ -550,6 +551,7 @@ public class AdminUi {
 		Genre genre = utilService.getGenreById(genreId);
 		if (genre != null)
 		{
+			genre.setName(null);
 			adminService.saveGenre(genre);
 		}
 	}
@@ -563,6 +565,7 @@ public class AdminUi {
 		Branch branch = utilService.getBranchById(branchId);
 		if (branch != null)
 		{
+			branch.setName(null);
 			adminService.saveBranch(branch);
 		}
 		
@@ -577,6 +580,7 @@ public class AdminUi {
 		Publisher publisher = utilService.getPublisherById(publisherId);
 		if (publisher != null)
 		{
+			publisher.setName(null);
 			adminService.savePublisher(publisher);
 		}
 		
@@ -591,6 +595,7 @@ public class AdminUi {
 		Book book = utilService.getBookById(bookId);
 		if (book != null)
 		{
+			book.setName(null);
 			adminService.saveBook(book);
 		}
 		
@@ -605,6 +610,7 @@ public class AdminUi {
 		Author author = utilService.getAuthorById(authorId);
 		if (author != null)
 		{
+			author.setName(null);
 			adminService.saveAuthor(author);
 		}
 		
