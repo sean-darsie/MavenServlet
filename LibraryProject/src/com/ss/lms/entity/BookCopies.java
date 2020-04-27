@@ -11,6 +11,13 @@ public class BookCopies {
 	Integer bookId;
 	Integer branchId;
 	Integer noOfCopies;
+	
+	/**
+	 * 
+	 * @param bookId
+	 * @param branchId
+	 * @param noOfCopies
+	 */
 	public BookCopies(Integer bookId, Integer branchId, Integer noOfCopies) {
 		super();
 		this.bookId = bookId;

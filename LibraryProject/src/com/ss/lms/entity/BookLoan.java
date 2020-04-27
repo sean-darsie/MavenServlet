@@ -17,6 +17,16 @@ public class BookLoan {
 	Date dateOut;
 	Date dateDue;
 	Date dateIn;
+	
+	/**
+	 * 
+	 * @param branchId
+	 * @param bookId
+	 * @param cardNo
+	 * @param dateOut
+	 * @param dateDue
+	 * @param dateIn
+	 */
 	public BookLoan(Integer branchId, Integer bookId, Integer cardNo, Date dateOut, Date dateDue, Date dateIn) {
 		super();
 		this.branchId = branchId;

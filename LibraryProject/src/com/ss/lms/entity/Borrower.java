@@ -52,6 +52,14 @@ public class Borrower {
 			return false;
 		return true;
 	}
+	
+	/**
+	 * 
+	 * @param cardNo
+	 * @param name
+	 * @param address
+	 * @param phone
+	 */
 	public Borrower(Integer cardNo, String name, String address, String phone) {
 		super();
 		this.cardNo = cardNo;

@@ -13,7 +13,12 @@ public class Author {
 	private Integer authorId;
 	private String name;
 	private List<Book> books;
-	
+	/**
+	 * 
+	 * @param authorId
+	 * @param name
+	 * @param books
+	 */
 	public Author(Integer authorId, String name, List<Book> books) {
 		super();
 		this.authorId = authorId;

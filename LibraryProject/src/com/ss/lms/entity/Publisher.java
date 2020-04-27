@@ -55,6 +55,13 @@ public class Publisher {
 	private String phone;
 	
 
+	/**
+	 * 
+	 * @param publisherId
+	 * @param name
+	 * @param address
+	 * @param phone
+	 */
 	public Publisher(Integer publisherId, String name, String address, String phone) {
 		super();
 		this.publisherId = publisherId;

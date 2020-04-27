@@ -49,6 +49,13 @@ public class Book {
 		this.name = name;
 	}
 
+	/**
+	 * 
+	 * @param bookId
+	 * @param name
+	 * @param pubId
+	 * @param authors
+	 */
 	public Book(Integer bookId, String name, Integer pubId, List<Author> authors) {
 		super();
 		this.bookId = bookId;

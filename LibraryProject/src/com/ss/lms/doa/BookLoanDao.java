@@ -51,6 +51,17 @@ public class BookLoanDao extends BaseDao<BookLoan>{
 				"WHERE noOfCopies > 0 AND bookId = ? AND branchId = ?;", new Object[] {bookLoan.getBookId(),bookLoan.getBranchId()});
 	}
 	
+	public void giveLoanExtension(BookLoan loan) throws ClassNotFoundException, SQLException
+	{
+		save("UPDATE tbl_book_loans\n" + 
+				"INNER JOIN tbl_library_branch\n" + 
+				"ON tbl_library_branch.branchId = tbl_book_loans.branchId\n" + 
+				"INNER JOIN tbl_borrower\n" + 
+				"ON tbl_borrower.cardNo = tbl_book_loans.cardNo\n" + 
+				"SET dueDate = ?\n" + 
+				"WHERE tbl_borrower.cardNo = ? AND tbl_library_branch.branchId = ? AND dateIn = ?; ", new Object[] {loan.getDateDue(),loan.getCardNo(),loan.getBranchId(),loan.getDateOut()});
+	}
+	
 	public List<BookLoan> getLoansByUserId(int cardNo) throws ClassNotFoundException, SQLException
 	{
 		return read("SELECT * FROM tbl_book_loans WHERE cardNo = ? AND dateIn IS NULL;",new Object[] {cardNo});

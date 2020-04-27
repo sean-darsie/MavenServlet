@@ -10,6 +10,12 @@ package com.ss.lms.entity;
 public class Genre {
 	private Integer genreId;
 	private String name;
+	
+	/**
+	 * 
+	 * @param genreId
+	 * @param name
+	 */
 	public Genre(Integer genreId, String name) {
 		super();
 		this.genreId = genreId;

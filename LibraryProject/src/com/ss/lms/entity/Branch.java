@@ -45,6 +45,13 @@ public class Branch {
 			return false;
 		return true;
 	}
+	
+	/**
+	 * 
+	 * @param branchId
+	 * @param name
+	 * @param address
+	 */
 	public Branch(Integer branchId, String name, String address) {
 		super();
 		this.branchId = branchId;
