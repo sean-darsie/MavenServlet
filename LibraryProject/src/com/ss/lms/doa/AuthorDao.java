@@ -37,6 +37,11 @@ public class AuthorDao extends BaseDao<Author>{
 	public List<Author> readAllAuthors() throws ClassNotFoundException, SQLException{
 		return read("SELECT * FROM tbl_author", null);
 	}
+	
+	public List<Author> getAuthorById(int authorId) throws ClassNotFoundException, SQLException
+	{
+		return read("SELECT * FROM tbl_author WHERE authorId = ?,", new Object[] {authorId});
+	}
 
 	public List<Author> listAuthorsByBook(Book book) throws ClassNotFoundException, SQLException
 	{

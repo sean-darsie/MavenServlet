@@ -62,6 +62,11 @@ public class BranchDao extends BaseDao<Branch>{
 				"WHERE tbl_book_copies.noOfCopies > 0;", null);
 	}
 	
+	public List<Branch> getBranchById(int branchId) throws ClassNotFoundException, SQLException
+	{
+		return read("SELECT * FROM tbl_library_branch WHERE branchId = ?", new Object[] {branchId});
+	}
+	
 	public boolean doesBranchContainBook(int branchId, int bookId) throws ClassNotFoundException, SQLException
 	{
 		List<Branch> booksOwnedByBranch = read("SELECT tbl_library_branch.branchId, branchName, branchAddress, noOfCopies FROM tbl_library_branch\n" + 

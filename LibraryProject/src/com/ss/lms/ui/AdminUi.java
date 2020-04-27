@@ -12,6 +12,7 @@ import com.ss.lms.entity.Branch;
 import com.ss.lms.entity.Genre;
 import com.ss.lms.entity.Publisher;
 import com.ss.lms.service.AdminService;
+import com.ss.lms.service.UtilService;
 
 /**
  * @author seandarsie
@@ -20,10 +21,12 @@ import com.ss.lms.service.AdminService;
 public class AdminUi {
 	Scanner in;
 	AdminService adminService;
+	UtilService utilService;
 
 	public AdminUi(Scanner in) {
 		this.in = in;
 		adminService = new AdminService();
+		utilService = new UtilService();
 	}
 	
 	public void start()
@@ -293,11 +296,317 @@ public class AdminUi {
 
 	private void promptUpdate() {
 		// TODO Auto-generated method stub
+		System.out.println("choose a table to update");
+		System.out.println("1)authors");
+		System.out.println("2)books");
+		System.out.println("3)publishers");
+		System.out.println("4)library branch");
+		System.out.println("5)genres");
+		System.out.println("6)borrower");
+		System.out.println("r)main menu");
+		System.out.println("q)quit");
+		
+		String input = in.nextLine();
+		
+		switch (input)
+		{
+		case"1":
+			updateAuthor();
+			break;
+		case"2":
+			updateBook();
+			break;
+		case"3":
+			updatePub();
+			break;
+		case"4":
+			updateBranch();
+			break;
+		case"5":
+			updateGenre();
+			break;
+		case"6":
+			updateBorrower();
+			break;
+		case"r":
+			LibraryInterface libraryInterface = new LibraryInterface(in);
+			libraryInterface.start();
+			break;
+		case"q":
+			System.exit(0);
+			break;
+		default:
+			System.out.println("you have not entered a corect option");
+			promptChoice();
+			break;
+		}
+		promptChoice();
+		
+	}
+
+	private void updateAuthor() {
+		// TODO Auto-generated method stub
+		System.out.println("Choose a author to update by id");
+		readAuthor();
+		String input = in.nextLine();
+		Integer authorId = Integer.parseInt(input);
+		Author author = utilService.getAuthorById(authorId);
+
+		if (author != null)
+		{	
+			System.out.println("enter a new name for this author or press enter to leave it the same");
+			String name = in.nextLine();
+			if (name.length() > 1)
+				author.setName(name);
+			adminService.saveAuthor(author);
+		}
+	}
+
+	private void updateGenre() {
+		// TODO Auto-generated method stub
+		
+		System.out.println("Choose a genre to update by id");
+		readGenre();
+		String input = in.nextLine();
+		Integer genreId = Integer.parseInt(input);
+		Genre genre = utilService.getGenreById(genreId);
+
+		if (genre != null)
+		{	
+			System.out.println("enter a new name for this genre or press enter to leave it the same");
+			String name = in.nextLine();
+			if (name.length() > 1)
+				genre.setName(name);
+			adminService.saveGenre(genre);
+		}
+	}
+
+	private void updateBranch() {
+		// TODO Auto-generated method stub
+		System.out.println("Choose a branch to update by id");
+		readBranch();
+		String input = in.nextLine();
+		Integer branchId = Integer.parseInt(input);
+		Branch branch = utilService.getBranchById(branchId);
+
+		if (branch != null)
+		{	
+			System.out.println("enter a new name for this branch or press enter to leave it the same");
+			String name = in.nextLine();
+			if (name.length() > 1)
+				branch.setName(name);
+			System.out.println("enter a new address for this branch or press enter to leave it the same");
+			String address = in.nextLine();
+			if (name.length() > 1)
+				branch.setName(address);
+			adminService.saveBranch(branch);
+		}
+		
+	}
+
+	private void updatePub() {
+		// TODO Auto-generated method stub
+		System.out.println("Choose a publisher to update by id");
+		readPub();
+		String input = in.nextLine();
+		Integer publisherId = Integer.parseInt(input);
+		Publisher publisher = utilService.getPublisherById(publisherId);
+
+		if (publisher != null)
+		{	
+			System.out.println("enter a new name for this publisher or press enter to leave it the same");
+			String name = in.nextLine();
+			if (name.length() > 1)
+				publisher.setName(name);
+			System.out.println("enter a new address for this publisher or press enter to leave it the same");
+			String address = in.nextLine();
+			if (name.length() > 1)
+				publisher.setName(address);
+			System.out.println("enter a new phone for this publisher or press enter to leave it the same");
+			String phone = in.nextLine();
+			if (name.length() > 1)
+				publisher.setName(phone);
+			adminService.savePublisher(publisher);
+		}
+		
+	}
+
+	private void updateBook() {
+		// TODO Auto-generated method stub
+		System.out.println("Choose a book to update by id");
+		readBook();
+		String input = in.nextLine();
+		Integer bookId = Integer.parseInt(input);
+		Book book = utilService.getBookById(bookId);
+
+		if (book != null)
+		{	
+			System.out.println("enter a new title for this book or press enter to leave it the same");
+			String name = in.nextLine();
+			if (name.length() > 1)
+				book.setName(name);
+			adminService.saveBook(book);
+		}
+		
+	}
+
+	private void updateBorrower() {
+		// TODO Auto-generated method stub
+		System.out.println("Choose a borrower to update by id");
+		readBorrower();
+		String input = in.nextLine();
+		Integer borrowerId = Integer.parseInt(input);
+		Borrower borrower = utilService.getBorrowerById(borrowerId);
+
+		if (borrower != null)
+		{	
+			System.out.println("enter a new name for this borrower or press enter to leave it the same");
+			String name = in.nextLine();
+			if (name.length() > 1)
+				borrower.setName(name);
+			System.out.println("enter a new address for this borrower or press enter to leave it the same");
+			String address = in.nextLine();
+			if (address.length() > 1)
+				borrower.setAddress(address);
+			System.out.println("enter a new phone for this borrower or press enter to leave it the same");
+			String phone = in.nextLine();
+			if (phone.length() > 1)
+				borrower.setPhone(phone);
+			adminService.saveBorrower(borrower);
+		}
 		
 	}
 
 	private void promptDelete() {
 		// TODO Auto-generated method stub
+		System.out.println("choose a table to update");
+		System.out.println("1)authors");
+		System.out.println("2)books");
+		System.out.println("3)publishers");
+		System.out.println("4)library branch");
+		System.out.println("5)genres");
+		System.out.println("6)borrower");
+		System.out.println("r)main menu");
+		System.out.println("q)quit");
+		
+		String input = in.nextLine();
+		
+		switch (input)
+		{
+		case"1":
+			deleteAuthor();
+			
+			break;
+		case"2":
+			deleteBook();
+			break;
+		case"3":
+			deletePub();
+			break;
+		case"4":
+			deleteBranch();
+			break;
+		case"5":
+			deleteGenre();
+			break;
+		case"6":
+			deleteBorrower();
+			break;
+		case"r":
+			LibraryInterface libraryInterface = new LibraryInterface(in);
+			libraryInterface.start();
+			break;
+		case"q":
+			System.exit(0);
+			break;
+		default:
+			System.out.println("you have not entered a corect option");
+			promptChoice();
+			break;
+		}
+		promptChoice();	
+	}
+
+	private void deleteBorrower() {
+		// TODO Auto-generated method stub
+		System.out.println("Choose an borrower to delete by id");
+		readBorrower();
+		String input = in.nextLine();
+		Integer borrowerId = Integer.parseInt(input);
+		Borrower borrower = utilService.getBorrowerById(borrowerId);
+		if (borrower != null)
+		{
+			adminService.saveBorrower(borrower);
+		}
+	}
+
+	private void deleteGenre() {
+		// TODO Auto-generated method stub
+		
+		System.out.println("Choose an genre to delete by id");
+		readGenre();
+		String input = in.nextLine();
+		Integer genreId = Integer.parseInt(input);
+		Genre genre = utilService.getGenreById(genreId);
+		if (genre != null)
+		{
+			adminService.saveGenre(genre);
+		}
+	}
+
+	private void deleteBranch() {
+		// TODO Auto-generated method stub
+		System.out.println("Choose an branch to delete by id");
+		readBranch();
+		String input = in.nextLine();
+		Integer branchId = Integer.parseInt(input);
+		Branch branch = utilService.getBranchById(branchId);
+		if (branch != null)
+		{
+			adminService.saveBranch(branch);
+		}
+		
+	}
+
+	private void deletePub() {
+		// TODO Auto-generated method stub
+		System.out.println("Choose an publisher to delete by id");
+		readPub();
+		String input = in.nextLine();
+		Integer publisherId = Integer.parseInt(input);
+		Publisher publisher = utilService.getPublisherById(publisherId);
+		if (publisher != null)
+		{
+			adminService.savePublisher(publisher);
+		}
+		
+	}
+
+	private void deleteBook() {
+		// TODO Auto-generated method stub
+		System.out.println("Choose an book to delete by id");
+		readBook();
+		String input = in.nextLine();
+		Integer bookId = Integer.parseInt(input);
+		Book book = utilService.getBookById(bookId);
+		if (book != null)
+		{
+			adminService.saveBook(book);
+		}
+		
+	}
+
+	private void deleteAuthor() {
+		// TODO Auto-generated method stub
+		System.out.println("Choose an author to delete by id");
+		readAuthor();
+		String input = in.nextLine();
+		Integer authorId = Integer.parseInt(input);
+		Author author = utilService.getAuthorById(authorId);
+		if (author != null)
+		{
+			adminService.saveAuthor(author);
+		}
 		
 	}
 	

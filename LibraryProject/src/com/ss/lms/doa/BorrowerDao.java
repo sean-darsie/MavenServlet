@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ss.lms.entity.Borrower;
+import com.ss.lms.entity.Branch;
 
 /**
  * @borrower seandarsie
@@ -41,6 +42,12 @@ public class BorrowerDao extends BaseDao<Borrower>{
 	{
 		return read("SELECT * FROM tbl_borrower WHERE cardNo = ?", new Object[]{cardNo});
 	}
+	
+	public List<Borrower> getBorrowerById(int cardNo) throws ClassNotFoundException, SQLException
+	{
+		return read("SELECT * FROM tbl_borrower WHERE borrowerId = ?", new Object[] {cardNo});
+	}
+	
 
 	@Override
 	public List<Borrower> extractData(ResultSet rs) throws SQLException {

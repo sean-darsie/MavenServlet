@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ss.lms.entity.Book;
+import com.ss.lms.entity.Branch;
 import com.ss.lms.entity.Genre;
 
 /**
@@ -36,6 +37,11 @@ public class GenreDao extends BaseDao<Genre>{
 	
 	public List<Genre> readAllGenres() throws ClassNotFoundException, SQLException{
 		return read("SELECT * FROM tbl_genre", null);
+	}
+	
+	public List<Genre> getGenreById(int genreId) throws ClassNotFoundException, SQLException
+	{
+		return read("SELECT * FROM tbl_genre WHERE genreId = ?", new Object[] {genreId});
 	}
 	
 	public List<Genre> listGenreByBook(Book book) throws ClassNotFoundException, SQLException
