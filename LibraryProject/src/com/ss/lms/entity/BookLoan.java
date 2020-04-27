@@ -3,6 +3,7 @@
  */
 package com.ss.lms.entity;
 
+import java.time.ZoneId;
 import java.util.Date;
 
 /**
@@ -21,9 +22,9 @@ public class BookLoan {
 		this.branchId = branchId;
 		this.bookId = bookId;
 		this.cardNo = cardNo;
-		this.dateOut = dateOut;
-		this.dateDue = dateDue;
-		this.dateIn = dateIn;
+		this.dateOut = dateOut;//Date.ofInstant((dateOut.toInstant()),ZoneId.systemDefault());
+		this.dateDue = dateDue;//Date.ofInstant((dateDue.toInstant()),ZoneId.systemDefault());
+		this.dateIn = dateIn;//Date.ofInstant((dateIn.toInstant()),ZoneId.systemDefault());
 	}
 	@Override
 	public int hashCode() {

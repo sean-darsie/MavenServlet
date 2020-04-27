@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ss.lms.entity.Author;
+import com.ss.lms.entity.Book;
 
 /**
  * @author seandarsie
@@ -37,6 +38,15 @@ public class AuthorDao extends BaseDao<Author>{
 		return read("SELECT * FROM tbl_author", null);
 	}
 
+	public List<Author> listAuthorsByBook(Book book) throws ClassNotFoundException, SQLException
+	{
+		return read("SELECT authorName FROM tbl_author\n" + 
+				"INNER JOIN tbl_book_authors\n" + 
+				"ON tbl_book_authors.authorId = tbl_author.authorId\n" + 
+				"INNER JOIN tbl_book\n" + 
+				"ON tbl_book.bookId = tbl_book_authors.bookId\n" + 
+				"WHERE tbl_book.bookId = ?;",new Object[] {book.getBookId()});
+	}
 	@Override
 	public List<Author> extractData(ResultSet rs) throws SQLException {
 		List<Author> authors = new ArrayList<>();
