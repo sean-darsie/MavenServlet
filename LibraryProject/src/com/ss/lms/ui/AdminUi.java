@@ -3,15 +3,19 @@
  */
 package com.ss.lms.ui;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import com.ss.lms.entity.Author;
 import com.ss.lms.entity.Book;
+import com.ss.lms.entity.BookLoan;
 import com.ss.lms.entity.Borrower;
 import com.ss.lms.entity.Branch;
 import com.ss.lms.entity.Genre;
 import com.ss.lms.entity.Publisher;
 import com.ss.lms.service.AdminService;
+import com.ss.lms.service.BorrowerService;
 import com.ss.lms.service.UtilService;
 
 /**
@@ -22,11 +26,13 @@ public class AdminUi {
 	Scanner in;
 	AdminService adminService;
 	UtilService utilService;
+	BorrowerService borrowerService;
 
 	public AdminUi(Scanner in) {
 		this.in = in;
 		adminService = new AdminService();
 		utilService = new UtilService();
+		borrowerService = new BorrowerService();
 	}
 	
 	public void start()
@@ -157,8 +163,7 @@ public class AdminUi {
 			promptChoice();
 			break;
 		}
-		LibraryInterface libraryInterface = new LibraryInterface(in);
-		libraryInterface.start();		
+		promptChoice();		
 	}
 
 	private void createBorrower() {
@@ -197,8 +202,31 @@ public class AdminUi {
 
 	private void createBook() {
 		System.out.println("Write the title of the book");
-		String input = in.nextLine();
-		adminService.saveBook(new Book(null, input, 1, null));
+		String name = in.nextLine();
+
+		System.out.println("Please provide a comma separated list of authorIds to associate with this book");
+		String[] authors = in.nextLine().split(",");
+		List<Author> authorList = new ArrayList<Author>();
+		for (String s: authors)
+		{
+			authorList.add(utilService.getAuthorById(Integer.parseInt(s)));
+		}
+		
+		System.out.println("Please provide a comma separated list of genreIds to associate with this book");
+		String[] genres = in.nextLine().split(",");
+		List<Genre> genreList = new ArrayList<Genre>();
+		for (String s: genres)
+		{
+			genreList.add(utilService.getGenreById(Integer.parseInt(s)));
+		}
+		
+		System.out.println("Please provide the publisherId of the publisher for this book");
+		
+		Integer publisher = Integer.parseInt(in.nextLine());
+		Book bookToSave = new Book(null, name, publisher, authorList);
+		bookToSave.setGenres(genreList);
+		adminService.saveBook(bookToSave);
+		adminService.createBookRelations(bookToSave);
 		// TODO Auto-generated method stub
 		
 	}
@@ -257,8 +285,7 @@ public class AdminUi {
 			promptChoice();
 			break;
 		}
-		LibraryInterface libraryInterface = new LibraryInterface(in);
-		libraryInterface.start();		
+		promptChoice();
 	}
 
 		
@@ -457,24 +484,59 @@ public class AdminUi {
 		String input = in.nextLine();
 		Integer borrowerId = Integer.parseInt(input);
 		Borrower borrower = utilService.getBorrowerById(borrowerId);
-
-		if (borrower != null)
-		{	
-			System.out.println("enter a new name for this borrower or press enter to leave it the same");
-			String name = in.nextLine();
-			if (name.length() > 1)
-				borrower.setName(name);
-			System.out.println("enter a new address for this borrower or press enter to leave it the same");
-			String address = in.nextLine();
-			if (address.length() > 1)
-				borrower.setAddress(address);
-			System.out.println("enter a new phone for this borrower or press enter to leave it the same");
-			String phone = in.nextLine();
-			if (phone.length() > 1)
-				borrower.setPhone(phone);
-			adminService.saveBorrower(borrower);
-		}
 		
+		System.out.println("Would you like to update the details of the borrower or give the borrower an extension on a book loan?");
+		System.out.println("1) extend book loan");
+		System.out.println("2) update details");
+		System.out.println("r) main menu");
+		System.out.println("q) quit");
+		
+		String choice = in.nextLine();
+
+		switch(choice)
+		{
+		case"1":
+			BookLoan[] loans = borrowerService.getLoansByUser(borrowerId);
+			System.out.println("Please choose a loan to extend by choosing from the loan numbers on the left");
+			for (int i = 0; i < loans.length; i++)
+			{
+				System.out.println(i+") bookId: "+ loans[i].getBookId()+" due date: "+ loans[i].getDateDue());
+			}
+			input = in.nextLine();
+			adminService.giveLoanExtension(loans[Integer.parseInt(input)]);
+			
+			break;
+		case "2":
+			if (borrower != null)
+			{	
+				System.out.println("enter a new name for this borrower or press enter to leave it the same");
+				String name = in.nextLine();
+				if (name.length() > 1)
+					borrower.setName(name);
+				System.out.println("enter a new address for this borrower or press enter to leave it the same");
+				String address = in.nextLine();
+				if (address.length() > 1)
+					borrower.setAddress(address);
+				System.out.println("enter a new phone for this borrower or press enter to leave it the same");
+				String phone = in.nextLine();
+				if (phone.length() > 1)
+					borrower.setPhone(phone);
+				adminService.saveBorrower(borrower);
+			}
+			break;
+		case"r":
+			LibraryInterface libraryInterface = new LibraryInterface(in);
+			libraryInterface.start();
+			break;
+		case "q":
+			System.exit(0);
+			break;
+		default:
+			System.out.println("please choose one of the options");
+			updateBorrower();
+			break;
+		}
+		promptChoice();
 	}
 
 	private void promptDelete() {

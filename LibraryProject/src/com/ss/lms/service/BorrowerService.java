@@ -181,12 +181,13 @@ public class BorrowerService {
 	public void checkOutABook(int bookId, int branchId, int cardNo)
 	{
 		Connection conn = null;
-		Date today = Date.from(Instant.now());
-		LocalDateTime dayOut = LocalDateTime.ofInstant(today.toInstant(), ZoneId.systemDefault());
-		LocalDateTime dueDate = dayOut.plusDays(7);
-		ZonedDateTime zdt = dueDate.atZone(ZoneId.systemDefault());
-		Date output = Date.from(zdt.toInstant());
-
+//		Date today = Date.from(Instant.now());
+//		LocalDateTime dayOut = LocalDateTime.ofInstant(today.toInstant(), ZoneId.systemDefault());
+//		LocalDateTime dueDate = dayOut.plusDays(7);
+//		ZonedDateTime zdt = dueDate.atZone(ZoneId.systemDefault());
+//		Date output = Date.from(zdt.toInstant());
+		LocalDateTime today = LocalDateTime.now();
+		LocalDateTime output = today.plusDays(7);
 		
 		BookLoan loan = new BookLoan(branchId, bookId, cardNo, today, output, null);
 		

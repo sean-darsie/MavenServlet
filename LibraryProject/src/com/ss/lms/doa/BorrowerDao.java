@@ -45,7 +45,7 @@ public class BorrowerDao extends BaseDao<Borrower>{
 	
 	public List<Borrower> getBorrowerById(int cardNo) throws ClassNotFoundException, SQLException
 	{
-		return read("SELECT * FROM tbl_borrower WHERE borrowerId = ?", new Object[] {cardNo});
+		return read("SELECT * FROM tbl_borrower WHERE cardNo = ?", new Object[] {cardNo});
 	}
 	
 

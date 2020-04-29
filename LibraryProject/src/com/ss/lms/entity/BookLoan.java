@@ -3,6 +3,7 @@
  */
 package com.ss.lms.entity;
 
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 
@@ -14,9 +15,9 @@ public class BookLoan {
 	Integer branchId;
 	Integer bookId;
 	Integer cardNo;
-	Date dateOut;
-	Date dateDue;
-	Date dateIn;
+	LocalDateTime dateOut;
+	LocalDateTime dateDue;
+	LocalDateTime dateIn;
 	
 	/**
 	 * 
@@ -27,7 +28,7 @@ public class BookLoan {
 	 * @param dateDue
 	 * @param dateIn
 	 */
-	public BookLoan(Integer branchId, Integer bookId, Integer cardNo, Date dateOut, Date dateDue, Date dateIn) {
+	public BookLoan(Integer branchId, Integer bookId, Integer cardNo, LocalDateTime dateOut, LocalDateTime dateDue, LocalDateTime dateIn) {
 		super();
 		this.branchId = branchId;
 		this.bookId = bookId;
@@ -98,22 +99,22 @@ public class BookLoan {
 	public void setCardNo(Integer cardNo) {
 		this.cardNo = cardNo;
 	}
-	public Date getDateOut() {
+	public LocalDateTime getDateOut() {
 		return dateOut;
 	}
-	public void setDateOut(Date dateOut) {
+	public void setDateOut(LocalDateTime dateOut) {
 		this.dateOut = dateOut;
 	}
-	public Date getDateDue() {
+	public LocalDateTime getDateDue() {
 		return dateDue;
 	}
-	public void setDateDue(Date dateDue) {
+	public void setDateDue(LocalDateTime dateDue) {
 		this.dateDue = dateDue;
 	}
-	public Date getDateIn() {
+	public LocalDateTime getDateIn() {
 		return dateIn;
 	}
-	public void setDateIn(Date dateIn) {
+	public void setDateIn(LocalDateTime dateIn) {
 		this.dateIn = dateIn;
 	}
 }

@@ -5,6 +5,12 @@ package com.ss.lms.service;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import com.ss.lms.doa.AuthorDao;
@@ -27,8 +33,13 @@ import com.ss.lms.entity.Publisher;
  *
  */
 public class AdminService {
-public ConnectionUtil connUtil = new ConnectionUtil();
+	public ConnectionUtil connUtil = new ConnectionUtil();
+	public UtilService utilService = new UtilService();
 	
+	/**
+	 * 
+	 * @param author
+	 */
 	public void saveAuthor(Author author){
 		Connection conn = null;
 		try {
@@ -37,7 +48,12 @@ public ConnectionUtil connUtil = new ConnectionUtil();
 			if(author.getAuthorId()!=null && author.getName()!=null){
 				adao.updateAuthor(author);
 			}else if(author.getAuthorId()!=null){
+				
+				List<Book> books = utilService.getBooksByAuthorId(author.getAuthorId());
+				for (Book b: books)
+					adao.removeRelationBetweenBookAndAuthor(author.getAuthorId(), b.getBookId());
 				adao.deleteAuthor(author);
+				
 			}else{
 				adao.addAuthor(author);
 			}
@@ -70,6 +86,14 @@ public ConnectionUtil connUtil = new ConnectionUtil();
 			if(book.getBookId()!=null && book.getName()!=null){
 				bdao.updateBook(book);
 			}else if(book.getBookId()!=null){
+				List<Author> authors = utilService.getAuthorsByBookId(book.getBookId());
+				for (Author a: authors)
+					bdao.removeRelationBetweenBookAndAuthor(book.getBookId(), a.getAuthorId());
+				
+				List<Genre> genres = utilService.getGenresByBookId(book.getBookId());
+				for (Genre g: genres)
+					bdao.removeRelationBetweenBookAndGenre(book.getBookId(), g.getGenreId());
+				
 				bdao.deleteBook(book);
 			}else{
 				bdao.addBook(book);
@@ -136,6 +160,9 @@ public ConnectionUtil connUtil = new ConnectionUtil();
 			if(genre.getGenreId()!=null && genre.getName()!=null){
 				bdao.updateGenre(genre);
 			}else if(genre.getGenreId()!=null){
+				List<Book> books = utilService.getBooksByGenreId(genre.getGenreId());
+				for (Book b: books)
+					bdao.removeRelationBetweenBookAndGenre(b.getBookId(), genre.getGenreId());
 				bdao.deleteGenre(genre);
 			}else{
 				bdao.addGenre(genre);
@@ -388,6 +415,9 @@ public ConnectionUtil connUtil = new ConnectionUtil();
 		}
 	}
 	
+	/**
+	 * 
+	 */
 	public void readBranchs()
 	{
 		Connection conn = null;
@@ -415,4 +445,70 @@ public ConnectionUtil connUtil = new ConnectionUtil();
 		}
 	}
 	
+	/**
+	 * 
+	 * @param book
+	 */
+	public void createBookRelations(Book book)
+	{
+		Connection conn = null;
+		try {
+			conn = connUtil.getConnection();
+			BookDao gdao = new BookDao(conn);
+			Book latestBook = gdao.returnLastBookAdded().get(0);
+			for (Author a: book.getAuthors())
+			{
+				gdao.addRelationBetweenBookAndAuthor(latestBook.getBookId(), a.getAuthorId());
+			}
+			
+			for (Genre g: book.getGenres())
+			{
+				gdao.addRelationBetweenBookAndGenre(latestBook.getBookId(), g.getGenreId());
+			}
+			conn.commit();
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		} finally {
+			if(conn!=null){
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	public void giveLoanExtension(BookLoan loan)
+	{
+		Connection conn = null;
+		try {
+			conn = connUtil.getConnection();
+			BookLoanDao gdao = new BookLoanDao(conn);
+			loan.setDateDue(loan.getDateDue().plusDays(7));
+			gdao.giveLoanExtension(loan);
+			conn.commit();
+			
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+
+		} finally {
+			if(conn!=null){
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+		
 }

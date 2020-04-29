@@ -5,6 +5,7 @@ package com.ss.lms.ui;
 
 import java.sql.SQLException;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -134,7 +135,7 @@ public class BorrowerUi {
 				promptBookReturn(cardNo);
 			}
 			else {
-				loans[index].setDateIn(new Date());
+				loans[index].setDateIn(LocalDateTime.now());
 				borrowerService.returnABook((BookLoan) loans[index]);
 				System.out.println("you have successfully returned the book. Thank you");
 				LibraryInterface lms = new LibraryInterface(in);

@@ -41,7 +41,7 @@ public class BranchDao extends BaseDao<Branch>{
 				"ON tbl_book.bookId = tbl_book_copies.bookId\n" + 
 				"INNER JOIN tbl_library_branch\n" + 
 				"ON tbl_library_branch.branchId = tbl_book_copies.branchId\n" + 
-				"SET noOfCopies = noOfCopies + 5\n" + 
+				"SET noOfCopies = noOfCopies + ?\n" + 
 				"WHERE tbl_library_branch.branchId = ? AND tbl_book.bookId = ?; ", new Object[] {noOfBooks,branch,bookId});
 	}
 	

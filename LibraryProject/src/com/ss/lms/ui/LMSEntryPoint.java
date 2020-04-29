@@ -18,5 +18,4 @@ public class LMSEntryPoint {
 		lms.start();
 		in.close();
 	}
-
 }

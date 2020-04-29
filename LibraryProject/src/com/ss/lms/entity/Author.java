@@ -23,7 +23,7 @@ public class Author {
 		super();
 		this.authorId = authorId;
 		this.name = name;
-		this.books = books;
+		this.setBooks(books);
 	}
 
 	public Author(Integer authorId, String authorName) {
@@ -73,6 +73,14 @@ public class Author {
 		} else if (!name.equals(other.name))
 			return false;
 		return true;
+	}
+
+	public List<Book> getBooks() {
+		return books;
+	}
+
+	public void setBooks(List<Book> books) {
+		this.books = books;
 	}
 	
 }

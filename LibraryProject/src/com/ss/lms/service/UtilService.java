@@ -25,8 +25,14 @@ import com.ss.lms.entity.Publisher;
  *
  */
 public class UtilService {
+	
 	public ConnectionUtil connUtil = new ConnectionUtil();
 	
+	/**
+	 * 
+	 * @param bookId
+	 * @return
+	 */
 	public Book getBookById(int bookId)
 	{
 		Connection conn = null;
@@ -62,6 +68,11 @@ public class UtilService {
 		
 	}
 	
+	/**
+	 * 
+	 * @param authorId
+	 * @return
+	 */
 	public Author getAuthorById(int authorId)
 	{
 		Connection conn = null;
@@ -97,6 +108,11 @@ public class UtilService {
 		
 	}
 	
+	/**
+	 * 
+	 * @param publisherId
+	 * @return
+	 */
 	public Publisher getPublisherById(int publisherId)
 	{
 		Connection conn = null;
@@ -132,6 +148,11 @@ public class UtilService {
 		
 	}
 	
+	/**
+	 * 
+	 * @param branchId
+	 * @return
+	 */
 	public Branch getBranchById(int branchId)
 	{
 		Connection conn = null;
@@ -167,6 +188,12 @@ public class UtilService {
 		
 	}
 	
+	
+	/**
+	 * 
+	 * @param genreId
+	 * @return
+	 */
 	public Genre getGenreById(int genreId)
 	{
 		Connection conn = null;
@@ -202,6 +229,11 @@ public class UtilService {
 		
 	}
 	
+	/**
+	 * 
+	 * @param borrowerId
+	 * @return
+	 */
 	public Borrower getBorrowerById(int borrowerId)
 	{
 		Connection conn = null;
@@ -235,6 +267,164 @@ public class UtilService {
 		}
 		return null;
 		
+	}
+	/**
+	 * 
+	 * @param bookId
+	 * @return
+	 */
+	List<Author> getAuthorsByBookId(int bookId)
+	{
+		Connection conn = null;
+
+		try {
+			conn = connUtil.getConnection();
+			AuthorDao adao = new AuthorDao(conn);
+			List<Author> author = adao.getAuthorById(bookId);
+			if (author.isEmpty())
+			{
+				return null;
+			}
+			else
+			{
+				return author;
+			}
+			
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+			System.out.println("problem in validate single user");
+			
+		} finally {
+			if(conn!=null){
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return null;
+		
+	}
+	/**
+	 * 
+	 * @param bookId
+	 * @return
+	 */
+	List<Genre> getGenresByBookId(int bookId)
+	{
+
+		Connection conn = null;
+
+		try {
+			conn = connUtil.getConnection();
+			GenreDao adao = new GenreDao(conn);
+			List<Genre> genre = adao.getGenresByBookId(bookId);
+			if (genre.isEmpty())
+			{
+				return null;
+			}
+			else
+			{
+				return genre;
+			}
+			
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+			System.out.println("problem in validate single user");
+			
+		} finally {
+			if(conn!=null){
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * 
+	 * @param authorId
+	 * @return
+	 */
+	List<Book> getBooksByAuthorId(int authorId)
+	{
+
+		Connection conn = null;
+
+		try {
+			conn = connUtil.getConnection();
+			BookDao adao = new BookDao(conn);
+			List<Book> books = adao.getBooksByAuthorId(authorId);
+			if (books.isEmpty())
+			{
+				return null;
+			}
+			else
+			{
+				return books;
+			}
+			
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+			System.out.println("problem in validate single user");
+			
+		} finally {
+			if(conn!=null){
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * 
+	 * @param genreId
+	 * @return
+	 */
+	List<Book> getBooksByGenreId(int genreId)
+	{
+
+		Connection conn = null;
+
+		try {
+			conn = connUtil.getConnection();
+			BookDao adao = new BookDao(conn);
+			List<Book> books = adao.getBooksByGenreId(genreId);
+			if (books.isEmpty())
+			{
+				return null;
+			}
+			else
+			{
+				return books;
+			}
+			
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+			System.out.println("problem in validate single user");
+			
+		} finally {
+			if(conn!=null){
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return null;
 	}
 
 }

@@ -74,9 +74,9 @@ public class BookLoanDao extends BaseDao<BookLoan>{
 			BookLoan bookLoan = new BookLoan(rs.getInt("branchId"),
 												rs.getInt("bookId"),
 												rs.getInt("cardNo"),
-												rs.getDate("dateOut"),
-												rs.getDate("dueDate"),
-												rs.getDate("dateIn"));
+												rs.getObject("dateOut", LocalDateTime.class),
+												rs.getObject("dueDate", LocalDateTime.class),
+												rs.getObject("dateIn", LocalDateTime.class));
 			bookLoans.add(bookLoan);
 		}
 		return bookLoans;
