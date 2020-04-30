@@ -1,5 +1,6 @@
 package com.gcit.servlet;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ import com.google.gson.Gson;
 /**
  * Servlet implementation class RestService
  */
-@WebServlet({ "/user", "/user/", "/user/id/*" })
+@WebServlet({ "/user", "/user/", "/user/id/*","/user/login" })
 public class RestService extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -45,6 +46,9 @@ public class RestService extends HttpServlet {
 		users.add(new User(3, "Al", "Pacino"));
 		users.add(new User(4, "Natalie", "Portman"));
 		
+		String userName = "testuser";
+		String password = "testpass";
+		
 		
 		if("/user".equals(path) || "/user/".equals(path)) {
 			response.setContentType("application/json");
@@ -53,6 +57,34 @@ public class RestService extends HttpServlet {
 			  
 			out.print(gson.toJson(users));
 			out.flush();
+		}
+		
+		if ("/user/login".equals(path))
+		{
+			String pathInfo = request.getPathInfo();
+			if(pathInfo == null) {
+				response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+			}
+			else {
+				try {
+					BufferedReader bufReader = request.getReader();
+					StringBuilder builder = new StringBuilder();
+					String line = bufReader.readLine();
+					while (line != null)
+					{
+						builder.append(line);
+						line = bufReader.readLine();
+					}
+					if (builder.toString().contains(password) && builder.toString().contains(userName))
+					{
+						System.out.println(bufReader.toString());
+						response.sendError(HttpServletResponse.SC_ACCEPTED);
+					}
+				}
+				catch (Exception e) {
+					response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+				}
+			}
 		}
 		
 		if(path.contains("/user/id")) {
